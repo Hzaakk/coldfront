@@ -26,9 +26,8 @@ jobs:
         
     - name: Run Provisioning Scripts
       run: |
-        bootstrap/development/update_curl.sh
-        bootstrap/development/fix_certs.sh
-        bootstrap/development/configure_firewalld.sh
+        bash <(sed 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/update_curl.sh)
+        bash <(sed 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/fix_certs.sh)
     
     - name: Configure main.yml
       run: |
