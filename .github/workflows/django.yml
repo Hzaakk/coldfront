@@ -26,9 +26,9 @@ jobs:
         
     - name: Run Provisioning Scripts
       run: |
-        coldfront/bootstrap/development/update_curl.sh
-        coldfront/bootstrap/development/fix_certs.sh
-        coldfront/bootstrap/development/configure_firewalld.sh
+        bootstrap/development/update_curl.sh
+        bootstrap/development/fix_certs.sh
+        bootstrap/development/configure_firewalld.sh
     
     - name: Configure main.yml
       run: |
