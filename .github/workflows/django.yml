@@ -26,8 +26,8 @@ jobs:
         
     - name: Run Provisioning Scripts
       run: |
-        sudo bash <(sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/update_curl.sh)
-        sudo bash <(sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/fix_certs.sh)
+        sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/update_curl.sh | sudo bash
+        sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/fix_certs.sh | sudo bash
     
     - name: Configure main.yml
       run: |
