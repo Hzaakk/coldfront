@@ -21,7 +21,7 @@ jobs:
         
     - name: Install Dependencies
       run: |
-        apt install -y ansible
+        sudo apt install -y ansible
         ansible-galaxy collection install -r bootstrap/development/requirements.yml
         
     - name: Run Provisioning Scripts
