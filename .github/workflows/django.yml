@@ -26,17 +26,17 @@ jobs:
         
     - name: Run Provisioning Scripts
       run: |
-        bash <(sed 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/update_curl.sh)
-        bash <(sed 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/fix_certs.sh)
+        bash <(sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/update_curl.sh)
+        bash <(sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/fix_certs.sh)
     
     - name: Configure main.yml
       run: |
         cp bootstrap/development/main.copyme main.yml
-        sed -i 's/^db_admin_passwd:.*/db_admin_passwd: root/' \
-            -e 's/^redis_passwd:.*/redis_passwd: root/' \
-            -e 's/^from_email:.*/from_email: hamzak@berkeley.edu/' \
-            -e 's/^admin_email:.*/admin_email: hamzak@berkeley.edu/' \
-            -e 's/^request_approval_cc_list:.*/request_approval_cc_list: ["hamzak@berkeley.edu"]/' main.yml
+        sed -ie 's/^db_admin_passwd:.*/db_admin_passwd: root/' \
+             -e 's/^redis_passwd:.*/redis_passwd: root/' \
+             -e 's/^from_email:.*/from_email: hamzak@berkeley.edu/' \
+             -e 's/^admin_email:.*/admin_email: hamzak@berkeley.edu/' \
+             -e 's/^request_approval_cc_list:.*/request_approval_cc_list: ["hamzak@berkeley.edu"]/' main.yml
         
     - name: Run Ansible Playbook
       run: |
