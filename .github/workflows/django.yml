@@ -13,22 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Set up Python 3.6.8
       uses: actions/setup-python@v3
       with:
         python-version: 3.6.8
-        
+
     - name: Install Dependencies
       run: |
         sudo apt install -y ansible
         ansible-galaxy collection install -r bootstrap/development/requirements.yml
-        
-    - name: Run Provisioning Scripts
-      run: |
-        sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/update_curl.sh | sudo bash
-        sed -e 's/yum install/apt-get install/' -e 's/yum update/apt-get install --only-upgrade/' bootstrap/development/fix_certs.sh | sudo bash
-    
+
     - name: Configure main.yml
       run: |
         cp bootstrap/development/main.copyme main.yml
@@ -37,12 +32,11 @@ jobs:
              -e 's/^from_email:.*/from_email: hamzak@berkeley.edu/' \
              -e 's/^admin_email:.*/admin_email: hamzak@berkeley.edu/' \
              -e 's/^request_approval_cc_list:.*/request_approval_cc_list: ["hamzak@berkeley.edu"]/' main.yml
-        
+
     - name: Run Ansible Playbook
       run: |
         ansible-playbook bootstrap/development/playbook.yml
-    
+
     - name: Run Django Tests
       run: |
         python manage.py test
-        
