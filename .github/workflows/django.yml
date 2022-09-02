@@ -43,8 +43,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Create Settings Files From Samples
+    - name: Create Settings Files From Samples And Create Log Files
       run: |
+        mkdir -p /var/log/user_portals/cf_mybrc
+        touch /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
+        touch /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         
