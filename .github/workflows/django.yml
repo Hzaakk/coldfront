@@ -41,6 +41,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        sudo apt -y install httpd mod_ssl
         
     - name: Run Tests
       run: |
