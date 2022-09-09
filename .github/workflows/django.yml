@@ -53,7 +53,8 @@ jobs:
         
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
         sudo chmod 660 /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
-        sudo chown -R :www-data /var/log/user_portals/cf_mybrc
+        
+        sudo chown -R 1000:www-data /var/log/user_portals/cf_mybrc
 
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
