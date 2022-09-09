@@ -45,6 +45,7 @@ jobs:
 
     - name: Create Settings Files From Samples And Create Log Files
       run: |
+        sudo umask 0002
         sudo mkdir -p /var/log/user_portals/cf_mybrc
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
         sudo chown :www-data /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
