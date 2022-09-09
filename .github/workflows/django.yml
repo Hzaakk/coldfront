@@ -48,11 +48,11 @@ jobs:
         sudo mkdir -p /var/log/user_portals/cf_mybrc
         
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
-        sudo chown 1000:www-data /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
+        sudo chown :www-data /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
         sudo chmod 660 /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
         
         sudo touch /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
-        sudo chown 1000:www-data /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
+        sudo chown :www-data /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
         sudo chmod 660 /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
         
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
