@@ -47,9 +47,9 @@ jobs:
       run: |
         sudo mkdir -p /var/log/user_portals/cf_mybrc
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
-        sudo chown :apache /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
+        sudo chown :www-data /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
         sudo touch /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
-        sudo chown :apache /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
+        sudo chown :www-data /var/log/user_portals/cf_mybrc/ cf_mybrc_api.log
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         
