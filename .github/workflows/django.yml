@@ -45,6 +45,8 @@ jobs:
 
     - name: Create Settings Files From Samples And Create Log Files
       run: |
+        sqlite3 cf_brc_db.sqlite3
+        
         sudo mkdir -p /var/log/user_portals/cf_mybrc
         sudo chmod 775 /var/log/user_portals/cf_mybrc
         
