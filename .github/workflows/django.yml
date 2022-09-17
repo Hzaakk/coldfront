@@ -62,4 +62,5 @@ jobs:
         
     - name: Run Tests
       run: |
+        python manage.py initial_setup
         python manage.py test
