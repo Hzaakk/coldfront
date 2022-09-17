@@ -1,6 +1,8 @@
 name: Django CI
 
 on:
+  schedule:
+    - cron: '0 10 * * *' # 10 AM UTC = 3 AM PST
   push:
     branches: [ "master", "develop" ]
   pull_request:
