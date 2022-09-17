@@ -12,15 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     
     services:
-      image: postgres:9.6.24
-      env:
-        POSTGRES_DB: cf_brc_db
-        POSTGRES_PASSWORD: test
-        POSTGRES_PORT: 5432
-        POSTGRES_USER: test
-      ports:
-      - 5432:5432
-      
+      postgres:
+        image: postgres:9.6.24
+        env:
+          POSTGRES_DB: cf_brc_db
+          POSTGRES_PASSWORD: test
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: test
+        ports:
+        - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
     steps:
     - uses: actions/checkout@v3
 
