@@ -8,9 +8,19 @@ on:
 
 jobs:
   build:
-
+  
     runs-on: ubuntu-latest
-
+    
+    services:
+      image: postgres:9.6.24
+      env:
+        POSTGRES_DB: cf_brc_db
+        POSTGRES_PASSWORD: test
+        POSTGRES_PORT: 5432
+        POSTGRES_USER: test
+      ports:
+      - 5432:5432
+      
     steps:
     - uses: actions/checkout@v3
 
@@ -18,24 +28,6 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: 3.6.8
-
-#    - name: Install Dependencies
-#      run: |
-#        sudo apt install -y ansible
-#        ansible-galaxy collection install -r bootstrap/development/requirements.yml
-#
-#    - name: Configure main.yml
-#      run: |
-#        cp bootstrap/development/main.copyme main.yml
-#        sed -e 's/^db_admin_passwd:.*/db_admin_passwd: root/' \
-#             -e 's/^redis_passwd:.*/redis_passwd: root/' \
-#             -e 's/^from_email:.*/from_email: hamzak@berkeley.edu/' \
-#             -e 's/^admin_email:.*/admin_email: hamzak@berkeley.edu/' \
-#             -e 's/^request_approval_cc_list:.*/request_approval_cc_list: ["hamzak@berkeley.edu"]/' -i main.yml
-#
-#    - name: Run Ansible Playbook
-#      run: |
-#        ansible-playbook bootstrap/development/playbook.yml
 
     - name: Install Dependencies
       run: |
@@ -45,8 +37,6 @@ jobs:
 
     - name: Create Settings Files From Samples And Create Log Files
       run: |
-        sqlite3 cf_brc_db.sqlite3
-        
         sudo mkdir -p /var/log/user_portals/cf_mybrc
         sudo chmod 775 /var/log/user_portals/cf_mybrc
         
