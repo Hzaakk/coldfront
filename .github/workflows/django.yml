@@ -50,6 +50,7 @@ jobs:
         
     - if: ${{ steps.cache-python.outputs.cache-hit != 'true' }}
       name: Install Python packages
+      run: |
         python3.6 -m venv ~/venv
         source ~/venv/bin/activate
         pip install -r requirements.txt
