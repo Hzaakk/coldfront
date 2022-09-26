@@ -63,4 +63,4 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py migrate
-        python manage.py test test_output_for_allowance_year_period
+        python manage.py test coldfront.core.allocation.tests.test_commands.test_start_allocation_period
