@@ -40,7 +40,6 @@ jobs:
     - name: Get apache2-dev version
       run: |
         apt-cache show apache2-dev > apache2-dev-version
-        dpkg -L apache2-dev
     
     - name: Cache apache2-dev
       id: cache-apache2-dev
@@ -97,6 +96,8 @@ jobs:
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         cp coldfront/config/test_settings.py.sample coldfront/config/test_settings.py
+        dpkg -L apache2-dev
+
         
     - name: Run Tests
       run: |
