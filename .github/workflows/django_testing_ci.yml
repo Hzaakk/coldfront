@@ -1,4 +1,4 @@
-name: Django CI
+name: Django Testing CI
 
 on:
   schedule:
@@ -10,9 +10,9 @@ on:
 
 jobs:
   build:
-  
+
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres:9.6.24-alpine3.15
@@ -28,7 +28,7 @@ jobs:
           --health-interval 2s
           --health-timeout 3s
           --health-retries 15
-          
+
     steps:
     - uses: actions/checkout@v3
 
@@ -55,20 +55,15 @@ jobs:
         python3.6 -m venv ~/venv
         source ~/venv/bin/activate
         pip install -r requirements.txt
-        
-#    - if: ${{ steps.cache-apache2-dev.outputs.cache-hit != 'true' }}
-#      name: Install apache2-dev
-#      run: |
-#        sudo apt -y install apache2-dev
-        
+
     - name: Create Settings Files From Samples And Create Log Files
       run: |
         sudo mkdir -p /var/log/user_portals/cf_mybrc
         sudo chmod 775 /var/log/user_portals/cf_mybrc
-        
+
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
         sudo chmod 666 /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
-        
+
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
         sudo chmod 666 /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
         
@@ -77,9 +72,10 @@ jobs:
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         cp coldfront/config/test_settings.py.sample coldfront/config/test_settings.py
-        
+
     - name: Run Tests
       run: |
         source ~/venv/bin/activate
         python manage.py migrate
-        python manage.py test coldfront.core.utils.tests.test_export_data
+        python manage.py test
+
