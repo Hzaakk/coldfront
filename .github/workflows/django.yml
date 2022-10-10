@@ -40,7 +40,7 @@ jobs:
     - name: Get apache2-dev version
       run: |
         apt-cache show apache2-dev > apache2-dev-version
-        sudo chmod a+rwx /usr/bin /usr/include /usr/share/
+        sudo chmod a+rwx /usr/{bin,include,share}/
     
     - name: Cache apache2-dev
       id: cache-apache2-dev
@@ -97,8 +97,8 @@ jobs:
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         cp coldfront/config/test_settings.py.sample coldfront/config/test_settings.py
-        dpkg -L apache2-dev
 
+        sudo chmod a+rwx /usr/{bin,include,share}/apache2
         
     - name: Run Tests
       run: |
