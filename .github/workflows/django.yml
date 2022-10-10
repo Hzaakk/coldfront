@@ -15,7 +15,7 @@ jobs:
     
     services:
       postgres:
-        image: postgres:9.6.24
+        image: postgres:9.6.24-alpine3.15
         env:
           POSTGRES_DB: cf_brc_db
           POSTGRES_PASSWORD: test
