@@ -36,31 +36,11 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: 3.6.8
-    
-    - name: Get apache2-dev version
-      run: |
-        apt-cache show apache2-dev > apache2-dev-version
-        sudo chmod a+rwx /usr/{bin,include,share}/
-    
+
     - name: Cache apache2-dev
-      id: cache-apache2-dev
-      uses: actions/cache@v3
+      uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        path: |
-          /usr/bin/apxs
-          /usr/bin/apxs2
-          /usr/bin/dh_apache2
-          /usr/include/apache2/
-          /usr/share/apache2/
-          /usr/share/debhelper/autoscripts/postinst-apache2
-          /usr/share/debhelper/autoscripts/postrm-apache2
-          /usr/share/debhelper/autoscripts/prerm-apache2
-          /usr/share/doc/apache2-dev
-          /usr/share/man/man1/apxs.1.gz
-          /usr/share/man/man1/apxs2.1.gz
-          /usr/share/man/man1/dh_apache2.1.gz
-          /usr/share/perl5/Debian/Debhelper/Sequence/apache2.pm
-        key: ${{ runner.os }}-apache2-files-${{ hashFiles('apache2-dev-version') }}
+          packages: apache2-dev
 
     - name: Cache Python packages
       id: cache-python
@@ -76,10 +56,10 @@ jobs:
         source ~/venv/bin/activate
         pip install -r requirements.txt
         
-    - if: ${{ steps.cache-apache2-dev.outputs.cache-hit != 'true' }}
-      name: Install apache2-dev
-      run: |
-        sudo apt -y install apache2-dev
+#    - if: ${{ steps.cache-apache2-dev.outputs.cache-hit != 'true' }}
+#      name: Install apache2-dev
+#      run: |
+#        sudo apt -y install apache2-dev
         
     - name: Create Settings Files From Samples And Create Log Files
       run: |
@@ -97,8 +77,6 @@ jobs:
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         cp coldfront/config/test_settings.py.sample coldfront/config/test_settings.py
-
-        sudo chmod a+rwx /usr/{include,share}/apache2
         
     - name: Run Tests
       run: |
