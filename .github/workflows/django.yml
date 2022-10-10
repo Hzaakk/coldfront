@@ -60,7 +60,7 @@ jobs:
           /usr/share/man/man1/apxs2.1.gz
           /usr/share/man/man1/dh_apache2.1.gz
           /usr/share/perl5/Debian/Debhelper/Sequence/apache2.pm
-        key: ${{ runner.os }}-apache2-dev-files-${{ hashFiles('apache2-dev-version') }}
+        key: ${{ runner.os }}-apache2-files-${{ hashFiles('apache2-dev-version') }}
 
     - name: Cache Python packages
       id: cache-python
