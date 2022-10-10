@@ -98,7 +98,7 @@ jobs:
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         cp coldfront/config/test_settings.py.sample coldfront/config/test_settings.py
 
-        sudo chmod a+rwx /usr/{bin,include,share}/apache2
+        sudo chmod a+rwx /usr/{include,share}/apache2
         
     - name: Run Tests
       run: |
