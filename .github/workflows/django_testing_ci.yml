@@ -1,20 +1,21 @@
 name: Django Testing CI
 
 on:
-  schedule:
+  schedule: # Run every night at 3 AM
     - cron: '0 10 * * *' # 10 AM UTC = 3 AM PST
-  push:
+  push: # Run when pushes are made on the master and develop branch
     branches: [ "master", "develop" ]
-  pull_request:
+  pull_request: # Runs when pull request to develop or master is opened,
+                # reopened, or updated with a new commit.
     branches: [ "master", "develop" ]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Default github actions environment for Linux
 
     services:
-      postgres:
+      postgres: # Set up a database container with the following specifications
         image: postgres:9.6.24-alpine3.15
         env:
           POSTGRES_DB: cf_brc_db
@@ -23,21 +24,22 @@ jobs:
           POSTGRES_USER: test
         ports:
         - 5432:5432
-        options: >-
+        options: >- # Actions run continues when database health is asserted
           --health-cmd pg_isready
           --health-interval 2s
           --health-timeout 3s
           --health-retries 15
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout the current commit
+      uses: actions/checkout@v3
 
     - name: Set up Python 3.6.8
       uses: actions/setup-python@v3
       with:
         python-version: 3.6.8
 
-    - name: Cache and/or Install apache2-dev
+    - name: Cache and/or Install apache2-dev needed for testing suite
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
           packages: apache2-dev
@@ -56,19 +58,22 @@ jobs:
         source ~/venv/bin/activate
         pip install -r requirements.txt
 
-    - name: Create Settings Files From Samples And Create Log Files
+    - name: Create settings files from samples and create log files needed for testing
       run: |
+        # Create log files
         sudo mkdir -p /var/log/user_portals/cf_mybrc
-        sudo chmod 775 /var/log/user_portals/cf_mybrc
-
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
-        sudo chmod 666 /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
-
         sudo touch /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
+        
+        # Modify log file permssions to allow testing to function properly
+        sudo chmod 775 /var/log/user_portals/cf_mybrc
+        sudo chmod 666 /var/log/user_portals/cf_mybrc/cf_mybrc_portal.log
         sudo chmod 666 /var/log/user_portals/cf_mybrc/cf_mybrc_api.log
         
+        # Give Apache permission to logs
         sudo chown -R :www-data /var/log/user_portals/cf_mybrc
-
+        
+        # Get setting configuration from samples
         cp coldfront/config/local_strings.py.sample coldfront/config/local_strings.py
         cp coldfront/config/local_settings.py.sample coldfront/config/local_settings.py
         cp coldfront/config/test_settings.py.sample coldfront/config/test_settings.py
