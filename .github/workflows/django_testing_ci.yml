@@ -1,3 +1,6 @@
+# Github Actions workflow that runs the test suite on the master branch
+# every night, as well as tests new pull requests.
+
 name: Django Testing CI
 
 on:
