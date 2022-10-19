@@ -5,7 +5,7 @@ name: Django Testing CI
 
 on:
   schedule: # Run every night at 3 AM
-    - cron: '0 10 * * *' # 10 AM UTC = 3 AM PST
+    - cron: '0 3 * * *' # 10 AM UTC = 3 AM PST
   push: # Run when pushes are made on the master and develop branch
     branches: [ "master", "develop" ]
   pull_request: # Runs when pull request to develop or master is opened,
@@ -86,4 +86,3 @@ jobs:
         source ~/venv/bin/activate
         python manage.py migrate
         python manage.py test
-
